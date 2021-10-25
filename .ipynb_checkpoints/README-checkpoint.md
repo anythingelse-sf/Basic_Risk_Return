@@ -1,93 +1,83 @@
-# Analyzing Portfolio Risk and Return
+## Background
 
-In this Challenge, you’ll need to determine the fund with the most investment potential based on key risk-management metrics: the daily returns, standard deviations, Sharpe ratios, and betas.
+Evalute four investment options on key risk-management metrics:\
+The daily retuns\
+Standard deviations\
+Sharpe ratio\
+beta\
+
+Import the CSV file to create a single DataFrame and do a risk analysis of the assets vs the S&P 500. The evaluation should use rolling statistics to track the risk-reward behavior over time.
 
 ## Instructions
+# Prepare your data
+1) Import the data
+2) Set the DateTimeIndex
+3) Use the Pandas pct_change function together with dropna to create daily returns for this index
 
-### Import the Data
+# Analyze by performance
+1) Find the daily returns for each fund\
+2) Plot the daily returns\
+3) Find the cumulative returns for each fund\
+4) Plot the cumulative returns
 
-Use the `whale_analysis.ipynb` file to complete the following steps:
+Returns: The S&P 500 is the best performer.
 
-1. Import the required libraries and dependencies.
+# Analyze by Volatility
+1) Use the Pandas plot function with a box parameter
+2) Drop out the S&P and run the box plots again
 
-2. Use the `read_csv` function and the `Path` module to read the `whale_navs.csv` file into a Pandas DataFrame. Be sure to create a `DateTimeIndex`. Review the first five rows of the DataFrame by using the `head` function.
+Returns: The most volatile is Berkshire Hathaway, the least volatile being Tiger Global Management.
 
-3. Use the Pandas `pct_change` function together with `dropna` to create the daily returns DataFrame. Base this DataFrame on the NAV prices of the four portfolios and on the closing price of the S&P 500 Index. Review the first five rows of the daily returns DataFrame.
+# Analyze by Risk [using Standard Deviation]
+1) Review the standard deviations
+2) Sort smallest to largest
+3) Find the annualized standard deviation (std * sqrt of 252 days)
+4) Plot the standard deviation for 21 day rolling periods
+5) Cut out the S&P500 to run again, comparing only the funds
 
-### Analyze the Performance
+Which of the four portfolios offers the best risk-return profile? Which offers the worst?
+I'm taking Berkshire and Tiger. Tiger has the least volatility and has peformed ok. Berkshire has more volatility but it also has the most return.
 
-Analyze the data to determine if any of the portfolios outperform the broader stock market, which the S&P 500 represents. To do so, complete the following steps:
+# Diversify the portfolio and run it again
 
-1. Use the default Pandas `plot` function to visualize the daily return data of the four fund portfolios and the S&P 500. Be sure to include the `title` parameter, and adjust the figure size if necessary.
+Use the pd.var function to calculate the variance of the S&P 500 by using a 60-day rolling window. Visualize the last five rows of the variance of the S&P 500.
 
-2. Use the Pandas `cumprod` function to calculate the cumulative returns for the four fund portfolios and the S&P 500. Review the last five rows of the cumulative returns DataFrame by using the Pandas `tail` function.
+Choose two portfolios that you chose, complete the following steps:
 
-3. Use the default Pandas `plot` to visualize the cumulative return values for the four funds and the S&P 500 over time. Be sure to include the `title` parameter, and adjust the figure size if necessary.
+1) Using a 60-day window, calculate the covariance for each fund.
+2) Using a 60-day window, calculate the beta for each fund
+3) Plot each value
 
-4. Answer the following question: Based on the cumulative return data and the visualization, do any of the four fund portfolios outperform the S&P 500 Index?
 
-### Analyze the Volatility
+# Analysis
 
-Analyze the volatility of each of the four fund portfolios and of the S&P 500 Index by using box plots. To do so, complete the following steps:
+Answer the following questions:
 
-1. Use the Pandas `plot` function and the `kind="box"` parameter to visualize the daily return data for each of the four portfolios and for the S&P 500 in a box plot. Be sure to include the `title` parameter, and adjust the figure size if necessary.
+Do any of the four fund portfolios outperform the S&P 500 index? 
+- No, the S&P is the best performer based on the cumprod() function.
 
-2. Use the Pandas `drop` function to create a new DataFrame that contains the data for just the four fund portfolios by dropping the S&P 500 column. Visualize the daily return data for just the four fund portfolios by using another box plot. Be sure to include the `title` parameter, and adjust the figure size if necessary.
+Based on the box plot visualization of just the four fund portfolios, which fund was the most volatile (with the greatest spread) and which was the least volatile (with the smallest spread)?
+- Berkshire Hathaway is the most volatile of the four funds. Tiger Global is the least volatile. 
 
-    > **Hint** Save this new DataFrame&mdash;the one that contains the data for just the four fund portfolios. You’ll use it throughout the analysis.
+Based on the annualized standard deviation, which portfolios pose more risk than the S&P 500?
+- None of the funds have a wider annualized standard deviation than the S&P 500
 
-3. Answer the following question: Based on the box plot visualization of just the four fund portfolios, which fund was the most volatile (with the greatest spread) and which was the least volatile (with the smallest spread)?
+Based on the rolling metrics, does the risk of each portfolio increase at the same time that the risk of the S&P 500 increases?
+- The funds seem to be mainly uncorrelated to the S&P 500 until 2020 happens. All of the rolling standard deviation of returns rise during the beginning of 2020.
 
-### Analyze the Risk
+Based on the rolling standard deviations of only the four fund portfolios, which portfolio poses the most risk? Does this change over time?
+- Berkshire has the highest risk overall, but Paulson has been rising in the last two years. Should of invested with Paulson in 2008 and went home.
 
-Evaluate the risk profile of each portfolio by using the standard deviation and the beta. To do so, complete the following steps:
+Which of the four portfolios offers the best risk-return profile? Which offers the worst? 
+- Berkshire Hathaway has the best Sharpe Ratio. It actually is better than that of the S&P 500, although the S&P 500 has a better overall return during this time period. 
 
-1. Use the Pandas `std` function to calculate the standard deviation for each of the four portfolios and for the S&P 500. Review the standard deviation calculations, sorted from smallest to largest.
+# Select two portfolios to continue the analysis
+Which of the two portfolios seem more sensitive to movements in the S&P 500?
+- Berkshire Hathaway is more sensitve to the movements in the S&P 500
 
-2. Calculate the annualized standard deviation for each of the four portfolios and for the S&P 500. To do that, multiply the standard deviation by the square root of the number of trading days. Use 252 for that number.
+Which of the two portfolios do you recommend for inclusion in your firm’s suite of fund offerings?
+- Tiger Global, it has a lower beta over the rolling windows and also a lower covaraince. It will be a more useful fund to protect against the downside of the S&P 500.
 
-3. Use the daily returns DataFrame and a 21-day rolling window to plot the rolling standard deviations of the four fund portfolios and of the S&P 500 index. Be sure to include the `title` parameter, and adjust the figure size if necessary.
+Additional Comments:
+- An interesting tidbit is that the Sharpe Ratio for Berkkshire is higher than that of the S&P 500. It may be useful to invest in a portfolio using the Berkshire Hathaway and the Tiger Global funds and dropping the index. 
 
-4. Use the daily returns DataFrame and a 21-day rolling window to plot the rolling standard deviations of only the four fund portfolios. Be sure to include the `title` parameter, and adjust the figure size if necessary.
-
-5. Answer the following three questions:
-
-* Based on the annualized standard deviation, which portfolios pose more risk than the S&P 500?
-
-* Based on the rolling metrics, does the risk of each portfolio increase at the same time that the risk of the S&P 500 increases?
-
-* Based on the rolling standard deviations of only the four fund portfolios, which portfolio poses the most risk? Does this change over time?
-
-### Analyze the Risk-Return Profile
-
-To determine the overall risk of an asset or portfolio, quantitative analysts and investment managers consider not only its risk metrics but also its risk-return profile. After all, if you have two portfolios that each offer a 10% return but one has less risk, you’d probably invest in the smaller-risk portfolio. For this reason, you need to consider the Sharpe ratios for each portfolio. To do so, complete the following steps:
-
-1. Use the daily return DataFrame to calculate the annualized average return data for the four fund portfolios and for the S&P 500. Use 252 for the number of trading days. Review the annualized average returns, sorted from lowest to highest.
-
-2. Calculate the Sharpe ratios for the four fund portfolios and for the S&P 500. To do that, divide the annualized average return by the annualized standard deviation for each. Review the resulting Sharpe ratios, sorted from lowest to highest.
-
-3. Visualize the Sharpe ratios for the four funds and for the S&P 500 in a bar chart. Be sure to include the `title` parameter, and adjust the figure size if necessary.
-
-4. Answer the following question: Which of the four portfolios offers the best risk-return profile? Which offers the worst?
-
-#### Diversify the Portfolio
-
-Your analysis is nearing completion. Now, you need to evaluate how the portfolios react relative to the broader market. Based on your analysis so far, choose two portfolios that you’re most likely to recommend as investment options. To start your analysis, complete the following step:
-
-* Use the Pandas `var` function to calculate the variance of the S&P 500 by using a 60-day rolling window. Visualize the last five rows of the variance of the S&P 500.
-
-Next, for each of the two portfolios that you chose, complete the following steps:
-
-1. Using the 60-day rolling window, the daily return data, and the S&P 500 returns, calculate the covariance. Review the last five rows of the covariance of the portfolio.
-
-2. Calculate the beta of the portfolio. To do that, divide the covariance of the portfolio by the variance of the S&P 500.
-
-3. Use the Pandas `mean` function to calculate the average value of the 60-day rolling beta of the portfolio.
-
-4. Plot the 60-day rolling beta. Be sure to include the `title` parameter, and adjust the figure size if necessary.
-
-Finally, answer the following two questions:
-
-* Which of the two portfolios seem more sensitive to movements in the S&P 500?
-
-* Which of the two portfolios do you recommend for inclusion in your firm’s suite of fund offerings?
